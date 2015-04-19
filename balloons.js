@@ -32,7 +32,7 @@ Balloon.prototype.draw = function() {
 		false);
     context.fillStyle = this.color;
     context.fill();
-    context.lineWidth = 1;
+    context.lineWidth = 2;
     context.strokeStyle = '#000000';
     context.stroke();
 }
@@ -130,7 +130,8 @@ BalloonCanvas.prototype.drawNewBalloon = function(x,y) {
     this.newBalloon.radius =
 	Math.sqrt(Math.pow(this.newBalloon.x - x,2)
 		  + Math.pow(this.newBalloon.y - y, 2));
-
+    this.clear();
+    this.drawBalloons();
     this.newBalloon.toBalloon().draw();
 }
 
