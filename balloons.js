@@ -32,8 +32,6 @@ Balloon.prototype.maxToIntersect = function(nextBalloon) {
 Balloon.prototype.hasInside = function(nextBalloon) {
     var distance = Math.sqrt(Math.pow(this.x - nextBalloon.x, 2) +
 			     Math.pow(this.y - nextBalloon.y, 2));
-    console.debug(this, nextBalloon,
-		  distance, this.radius, distance < this.radius);
     return distance < this.radius; 
 }
  
@@ -61,25 +59,25 @@ var BalloonCanvas = function(canvas) {
     this.canvas = canvas;
     this.state = AIMING;
     this.trajectory = {x: 0, y: 0};
-    var b = this;
+    var bc = this;
     
     // shoot or finish creating a balloon
     canvas.onclick = function(e) {
-	if(b.state === AIMING) {
-	    b.createBalloon(e.layerX, e.layerY);
-	} else if (b.state === CREATION) {
-	    b.setRadius(e.layerX, e.layerY);
+	if(bc.state === AIMING) {
+	    bc.createBalloon(e.layerX, e.layerY);
+	} else if (bc.state === CREATION) {
+	    bc.setRadius(e.layerX, e.layerY);
 	}
     }
 
     // aim or create a balloon
     canvas.onmousemove = function(e) {
-	if(b.state === AIMING) {
-	    b.trajectory.x = e.layerX;
-	    b.trajectory.y = e.layerY;
-	    b.draw();
+	if(bc.state === AIMING) {
+	    bc.trajectory.x = e.layerX;
+	    bc.trajectory.y = e.layerY;
+	    bc.draw();
 	} else {
-	    b.drawNewBalloon(e.layerX, e.layerY);
+	    bc.drawNewBalloon(e.layerX, e.layerY);
 	}
     }
 }
@@ -172,7 +170,6 @@ BalloonCanvas.prototype.createBalloon = function(x,y) {
 
     this.state = CREATION;
     this.newBalloon.maxRadius = this.findMaxIntersect(this.newBalloon);
-    console.debug(this.newBalloon);
 }
 
 /**
